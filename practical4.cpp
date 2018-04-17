@@ -23,6 +23,16 @@ public:
 
 int main()
 {
+    int size;
+    cout<<"Enter size of relation you want to create: ";
+    cin>>size;
+    Relation A(size);
+    if(A.isSymmetric()&&A.isTranisitive()&&A.isReflexive())
+        cout<<"A is equivalent"<<endl;
+    else if(A.isAntiSymmetric()&&A.isTranisitive()&&A.isReflexive())
+        cout<<"A is poset"<<endl;
+    else
+        cout<<"Relation is neither poset nor equivalent"<<endl;
     return 0;
 }
 
@@ -117,11 +127,14 @@ bool Relation::isAntiSymmetric()
 {
     for(int i=0; i<m; i++)
     {
-        if(!(inRelation(relationMatrix[i][0],relationMatrix[i][1])
-        &&
-        inRelation(relationMatrix[i][1],relationMatrix[i][0])
-        &&relationMatrix[i][0]==relationMatrix[i][1]))
-            return false;
+        if(inRelation(relationMatrix[i][0],relationMatrix[i][1])
+            && inRelation(relationMatrix[i][0],relationMatrix[i][1]))
+        {
+            if(relationMatrix[i][0]==relationMatrix[i][1])
+                return true;
+            else
+                return false;
+        }
     }
     return true;
 }

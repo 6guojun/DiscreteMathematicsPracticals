@@ -23,8 +23,10 @@ public:
 
 int main()
 {
-    cout<<"Enter relation containing three elements"<<endl;
-    Relation A(3);
+    int size;
+    cout<<"Enter size of relation you want to create: ";
+    cin>>size;
+    Relation A(size);
     if(A.isReflexive())
         cout<<"A is reflexive"<<endl;
     if(A.isSymmetric())
@@ -127,11 +129,14 @@ bool Relation::isAntiSymmetric()
 {
     for(int i=0; i<m; i++)
     {
-        if(!(inRelation(relationMatrix[i][0],relationMatrix[i][1])
-        &&
-        inRelation(relationMatrix[i][1],relationMatrix[i][0])
-        &&relationMatrix[i][0]==relationMatrix[i][1]))
-            return false;
+        if(inRelation(relationMatrix[i][0],relationMatrix[i][1])
+            && inRelation(relationMatrix[i][0],relationMatrix[i][1]))
+        {
+            if(relationMatrix[i][0]==relationMatrix[i][1])
+                return true;
+            else
+                return false;
+        }
     }
     return true;
 }
