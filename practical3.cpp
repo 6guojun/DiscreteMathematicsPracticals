@@ -24,6 +24,8 @@ int main()
     Relation A(3);
     if(A.isReflexive())
         cout<<"A is reflexive"<<endl;
+    if(A.isSymmetric())
+        cout<<"A is symmetric"<<endl;
     return 0;
 }
 
@@ -104,5 +106,12 @@ bool Relation::inRelation(int a,int b)
 
 bool Relation::isSymmetric()
 {
-    
+    for(int i=0; i<m; i++)
+    {
+        if(!(inRelation(relationMatrix[i][0],relationMatrix[i][1])
+        &&
+        inRelation(relationMatrix[i][1],relationMatrix[i][0])))
+            return false;
+    }
+    return true;
 }
