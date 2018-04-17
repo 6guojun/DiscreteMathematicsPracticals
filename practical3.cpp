@@ -10,12 +10,15 @@ class Relation
     int domainLength;
     bool inDomain(int element);
     bool inRelation(int a,int b);
+    int getImage(int element);
 public:
     Relation(int size);
     Relation(const Relation& relation);
     ~Relation();
     bool isReflexive();
     bool isSymmetric();
+    bool isAntiSymmetric();
+    bool isTranisitive();
 };
 
 int main()
@@ -26,6 +29,10 @@ int main()
         cout<<"A is reflexive"<<endl;
     if(A.isSymmetric())
         cout<<"A is symmetric"<<endl;
+    if(A.isAntiSymmetric())
+        cout<<"A is Anti symmetric"<<endl;
+    if(A.isTranisitive())
+        cout<<"A is Transitive"<<endl;
     return 0;
 }
 
@@ -114,4 +121,43 @@ bool Relation::isSymmetric()
             return false;
     }
     return true;
+}
+
+bool Relation::isAntiSymmetric()
+{
+    for(int i=0; i<m; i++)
+    {
+        if(!(inRelation(relationMatrix[i][0],relationMatrix[i][1])
+        &&
+        inRelation(relationMatrix[i][1],relationMatrix[i][0])
+        &&relationMatrix[i][0]==relationMatrix[i][1]))
+            return false;
+    }
+    return true;
+}
+
+bool Relation::isTranisitive()
+{
+    for(int i=0; i<m; i++)
+    {
+        if(!(inRelation(relationMatrix[i][0],relationMatrix[i][1])
+        &&
+        inDomain(relationMatrix[i][1])
+        &&
+        inRelation(relationMatrix[i][1],getImage(relationMatrix[i][1])))
+        &&
+        inRelation(relationMatrix[i][0],getImage(relationMatrix[i][1])))
+            return false;
+    }
+    return true;
+}
+
+int Relation::getImage(int element)
+{
+    for(int i=0; i<m; i++)
+    {
+        if(relationMatrix[i][0]==element)
+            return relationMatrix[i][1];
+    }
+    return -1;
 }
